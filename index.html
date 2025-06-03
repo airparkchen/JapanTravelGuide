@@ -898,36 +898,46 @@
                 speechSynthesis.cancel();
                 
                 const utterance = new SpeechSynthesisUtterance(text);
-                
-                // 嘗試尋找日文語音
-                const voices = speechSynthesis.getVoices();
-                const japaneseVoice = voices.find(voice => 
-                    voice.lang.includes('ja') || voice.name.includes('Japanese')
-                );
-                
-                if (japaneseVoice) {
-                    utterance.voice = japaneseVoice;
-                    utterance.lang = 'ja-JP';
-                } else {
-                    // 如果沒有日文語音，提醒用戶
-                    showNotification('您的設備沒有安裝日文語音包，建議前往設定下載');
-                    return;
-                }
-                
+                utterance.lang = 'ja-JP';
                 utterance.rate = 0.8;
                 utterance.pitch = 1;
                 
-                utterance.onend = function() {
-                    console.log('語音播放完成');
+                // 等待語音載入後再尋找日文語音
+                const setVoiceAndSpeak = () => {
+                    const voices = speechSynthesis.getVoices();
+                    const japaneseVoice = voices.find(voice => 
+                        voice.lang.includes('ja') || 
+                        voice.name.toLowerCase().includes('japanese') ||
+                        voice.name.includes('日本')
+                    );
+                    
+                    if (japaneseVoice) {
+                        utterance.voice = japaneseVoice;
+                        showNotification('正在播放日文語音...');
+                    } else {
+                        // 如果沒有日文語音，仍然嘗試播放但給予提醒
+                        showNotification('正在播放語音（建議安裝日文語音包以獲得更好效果）');
+                    }
+                    
+                    utterance.onend = function() {
+                        console.log('語音播放完成');
+                    };
+                    
+                    utterance.onerror = function(event) {
+                        console.error('語音播放錯誤:', event.error);
+                        showNotification('語音播放失敗，請檢查設備音量和語音設定');
+                    };
+                    
+                    speechSynthesis.speak(utterance);
                 };
                 
-                utterance.onerror = function(event) {
-                    console.error('語音播放錯誤:', event.error);
-                    showNotification('語音播放失敗，您的設備可能沒有日文語音包');
-                };
+                // 如果語音列表尚未載入，等待載入
+                if (speechSynthesis.getVoices().length === 0) {
+                    speechSynthesis.addEventListener('voiceschanged', setVoiceAndSpeak, { once: true });
+                } else {
+                    setVoiceAndSpeak();
+                }
                 
-                speechSynthesis.speak(utterance);
-                showNotification('正在播放日文語音...');
             } else {
                 showNotification('您的瀏覽器不支援語音播放功能');
             }
