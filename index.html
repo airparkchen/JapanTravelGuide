@@ -331,7 +331,7 @@
                 </p>
                 
                 <div style="text-align: center; margin: 20px 0;">
-                    <a href="https://vjw-lp.digital.go.jp/zh-TW/" target="_blank" class="button" style="font-size: 1.2rem; padding: 20px 40px;">
+                    <a href="https://www.vjw.digital.go.jp/#/vjwplo001" target="_blank" class="button" style="font-size: 1.2rem; padding: 20px 40px;">
                         🔗 前往VJW官方網站
                     </a>
                 </div>
@@ -578,7 +578,7 @@
                     </p>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
-                        <a href="uber://?action=setPickup&dropoff[formatted_address]=福岡日航酒店&dropoff[latitude]=33.5904&dropoff[longitude]=130.4017" class="uber-button">
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=福岡日航酒店&dropoff[latitude]=33.59132522935279&dropoff[longitude]=130.41722874350322" class="uber-button">
                             🏨 返回日航酒店<br>
                             <small style="font-size: 0.9rem; opacity: 0.8;">Hotel Nikko Fukuoka</small>
                         </a>
@@ -586,13 +586,13 @@
                             ✈️ 前往福岡機場<br>
                             <small style="font-size: 0.9rem; opacity: 0.8;">Fukuoka Airport</small>
                         </a>
-                        <a href="uber://?action=setPickup&dropoff[formatted_address]=博多車站&dropoff[latitude]=33.5904&dropoff[longitude]=130.4200" class="uber-button">
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=博多車站&dropoff[latitude]=33.589781990484134&dropoff[longitude]=130.42071224138348" class="uber-button">
                             🚇 前往博多車站<br>
                             <small style="font-size: 0.9rem; opacity: 0.8;">Hakata Station</small>
                         </a>
-                        <a href="uber://?action=setPickup&dropoff[formatted_address]=天神&dropoff[latitude]=33.5904&dropoff[longitude]=130.4017" class="uber-button">
-                            🛍️ 前往天神商圈<br>
-                            <small style="font-size: 0.9rem; opacity: 0.8;">Tenjin Shopping Area</small>
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=天神車站&dropoff[latitude]=33.591396655020475&dropoff[longitude]=130.39880941112227" class="uber-button">
+                            🚇 前往天神車站<br>
+                            <small style="font-size: 0.9rem; opacity: 0.8;">Tenjin Station</small>
                         </a>
                     </div>
 
@@ -898,18 +898,32 @@
                 speechSynthesis.cancel();
                 
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'ja-JP';
+                
+                // 嘗試尋找日文語音
+                const voices = speechSynthesis.getVoices();
+                const japaneseVoice = voices.find(voice => 
+                    voice.lang.includes('ja') || voice.name.includes('Japanese')
+                );
+                
+                if (japaneseVoice) {
+                    utterance.voice = japaneseVoice;
+                    utterance.lang = 'ja-JP';
+                } else {
+                    // 如果沒有日文語音，提醒用戶
+                    showNotification('您的設備沒有安裝日文語音包，建議前往設定下載');
+                    return;
+                }
+                
                 utterance.rate = 0.8;
                 utterance.pitch = 1;
                 
-                // 設定語音播放完成後的回調
                 utterance.onend = function() {
                     console.log('語音播放完成');
                 };
                 
                 utterance.onerror = function(event) {
                     console.error('語音播放錯誤:', event.error);
-                    showNotification('語音播放失敗，請檢查設備設定');
+                    showNotification('語音播放失敗，您的設備可能沒有日文語音包');
                 };
                 
                 speechSynthesis.speak(utterance);
