@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本自助旅行輔助 - 長輩友善版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(45deg, #4facfe 0%, #5f72bd 100%);
+            color: white;
+            padding: 25px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-content {
+            padding: 30px;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .button.success {
+            background: linear-gradient(45deg, #56ab2f 0%, #a8e6cf 100%);
+        }
+
+        .button.danger {
+            background: linear-gradient(45deg, #ff6b6b 0%, #ff8e8e 100%);
+        }
+
+        .vjw-steps {
+            display: grid;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .vjw-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .vjw-step img {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .vjw-step-content h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .vjw-step-content p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .transport-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .transport-card {
+            background: #fff;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .transport-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+        }
+
+        .transport-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .transport-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .phrase-category {
+            margin-bottom: 30px;
+        }
+
+        .phrase-category h3 {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 0;
+            font-size: 1.3rem;
+        }
+
+        .phrase-list {
+            background: #f8f9ff;
+            border-radius: 0 0 10px 10px;
+            padding: 20px;
+        }
+
+        .phrase-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .phrase-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .japanese {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .chinese {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .phrase-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .emergency-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .emergency-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .emergency-card .phone {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .uber-section {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .uber-button {
+            background: #000;
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .uber-button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .vjw-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .phrase-buttons {
+                justify-content: center;
+            }
+            
+            body {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗾 日本自助旅行輔助</h1>
+            <p>專為長輩設計的友善旅遊指南</p>
+        </div>
+
+        <!-- VJW教學區塊 -->
+        <div class="section">
+            <div class="section-header">
+                <span>🛂</span>
+                <span>VJW入境教學</span>
+            </div>
+            <div class="section-content">
+                <p style="font-size: 1.1rem; margin-bottom: 20px; color: #666;">
+                    VJW (Visit Japan Web) 是日本政府推出的入境手續數位化服務，可以事先在網路上完成入境審查、海關申報等手續。
+                </p>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <a href="https://vjw-lp.digital.go.jp/zh-TW/" target="_blank" class="button" style="font-size: 1.2rem; padding: 20px 40px;">
+                        🔗 前往VJW官方網站
+                    </a>
+                </div>
+
+                <div class="vjw-steps">
+                    <div class="vjw-step">
+                        <img src="images/vjw/step1-register.jpg" alt="VJW註冊步驟">
+                        <div class="vjw-step-content">
+                            <h3>步驟1：建立帳號</h3>
+                            <p>進入VJW網站後，點擊「建立新帳號」，使用電子郵件地址註冊。請記住您的登入資訊。</p>
+                        </div>
+                    </div>
+
+                    <div class="vjw-step">
+                        <img src="images/vjw/step2-passport.jpg" alt="護照資訊填寫">
+                        <div class="vjw-step-content">
+                            <h3>步驟2：填寫護照資訊</h3>
+                            <p>上傳護照照片頁面，系統會自動讀取資訊。請確認所有資料正確無誤。</p>
+                        </div>
+                    </div>
+
+                    <div class="vjw-step">
+                        <img src="images/vjw/step3-flight.jpg" alt="航班資訊填寫">
+                        <div class="vjw-step-content">
+                            <h3>步驟3：填寫航班資訊</h3>
+                            <p>輸入您的航班號碼、抵達日期和時間。這些資訊可在您的機票上找到。</p>
+                        </div>
+                    </div>
+
+                    <div class="vjw-step">
+                        <img src="images/vjw/step4-customs.jpg" alt="海關申報">
+                        <div class="vjw-step-content">
+                            <h3>步驟4：海關申報</h3>
+                            <p>誠實填寫攜帶物品申報。一般觀光客選擇「沒有需要申報的物品」即可。</p>
+                        </div>
+                    </div>
+
+                    <div class="vjw-step">
+                        <img src="images/vjw/step5-qrcode.jpg" alt="QR碼生成">
+                        <div class="vjw-step-content">
+                            <h3>步驟5：取得QR碼</h3>
+                            <p>完成所有填寫後，系統會生成QR碼。請截圖保存，入境時出示給海關人員掃描。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 交通資訊區塊 -->
+        <div class="section">
+            <div class="section-header">
+                <span>🚇</span>
+                <span>交通資訊</span>
+            </div>
+            <div class="section-content">
+                <div class="transport-grid">
+                    <div class="transport-card">
+                        <h3>🚄 機場到市區</h3>
+                        <img src="images/transport/airport-express.jpg" alt="機場快線">
+                        <p><strong>成田機場 → 東京市區</strong></p>
+                        <p>• 成田Express (N'EX): 直達新宿、澀谷</p>
+                        <p>• 京成電鐵: 到上野較便宜</p>
+                        <p>• 機場巴士: 直達各大飯店</p>
+                        <p><strong>購票地點：</strong>機場1樓入境大廳</p>
+                    </div>
+
+                    <div class="transport-card">
+                        <h3>🚇 東京地鐵</h3>
+                        <img src="images/transport/tokyo-metro.jpg" alt="東京地鐵">
+                        <p><strong>推薦票券</strong></p>
+                        <p>• 東京Metro 24小時券: 800日圓</p>
+                        <p>• 都營地鐵一日券: 700日圓</p>
+                        <p>• 東京Metro + 都營共通券: 900日圓</p>
+                        <p><strong>購票地點：</strong>各地鐵站售票機</p>
+                    </div>
+
+                    <div class="transport-card">
+                        <h3>🚅 新幹線</h3>
+                        <img src="images/transport/shinkansen.jpg" alt="新幹線">
+                        <p><strong>主要路線</strong></p>
+                        <p>• 東海道新幹線: 東京↔大阪</p>
+                        <p>• 東北新幹線: 東京↔仙台</p>
+                        <p>• 上越新幹線: 東京↔新潟</p>
+                        <p><strong>購票地點：</strong>JR車站綠色窗口</p>
+                    </div>
+
+                    <div class="transport-card">
+                        <h3>🚌 高速巴士</h3>
+                        <img src="images/transport/highway-bus.jpg" alt="高速巴士">
+                        <p><strong>經濟實惠選擇</strong></p>
+                        <p>• 東京↔大阪: 約4000-8000日圓</p>
+                        <p>• 東京↔京都: 約3000-6000日圓</p>
+                        <p>• 夜行巴士可省住宿費</p>
+                        <p><strong>購票地點：</strong>各大車站巴士中心</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Uber叫車區塊 -->
+        <div class="section">
+            <div class="section-header">
+                <span>🚗</span>
+                <span>快速叫車</span>
+            </div>
+            <div class="section-content">
+                <div class="uber-section">
+                    <h2>🏨 一鍵回飯店</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                        點擊下方按鈕可直接開啟Uber並設定目的地
+                    </p>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px;">
+                        * 請先在手機上安裝Uber應用程式
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px;">
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=東京車站&dropoff[latitude]=35.6812&dropoff[longitude]=139.7671" class="uber-button">
+                            🚉 前往東京車站
+                        </a>
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=新宿車站&dropoff[latitude]=35.6896&dropoff[longitude]=139.7006" class="uber-button">
+                            🌃 前往新宿車站
+                        </a>
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=澀谷車站&dropoff[latitude]=35.6580&dropoff[longitude]=139.7016" class="uber-button">
+                            🎯 前往澀谷車站
+                        </a>
+                        <a href="uber://?action=setPickup&dropoff[formatted_address]=成田國際機場&dropoff[latitude]=35.7720&dropoff[longitude]=140.3929" class="uber-button">
+                            ✈️ 前往成田機場
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 常用日文句庫 -->
+        <div class="section">
+            <div class="section-header">
+                <span>💬</span>
+                <span>常用日文對話</span>
+            </div>
+            <div class="section-content">
+                <div class="phrase-category">
+                    <h3>🗺️ 問路導航</h3>
+                    <div class="phrase-list">
+                        <div class="phrase-item">
+                            <div class="japanese">すみません、〇〇駅はどこですか？</div>
+                            <div class="chinese">請問〇〇車站在哪裡？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('すみません、〇〇駅はどこですか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('すみません、〇〇駅はどこですか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">〇〇まで、どうやって行きますか？</div>
+                            <div class="chinese">到〇〇要怎麼去？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('〇〇まで、どうやって行きますか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('〇〇まで、どうやって行きますか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">この電車は〇〇に行きますか？</div>
+                            <div class="chinese">這班電車有到〇〇嗎？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('この電車は〇〇に行きますか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('この電車は〇〇に行きますか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phrase-category">
+                    <h3>🍽️ 餐廳用餐</h3>
+                    <div class="phrase-list">
+                        <div class="phrase-item">
+                            <div class="japanese">すみません、メニューをお願いします</div>
+                            <div class="chinese">請給我菜單</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('すみません、メニューをお願いします')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('すみません、メニューをお願いします')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">おすすめは何ですか？</div>
+                            <div class="chinese">推薦什麼？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('おすすめは何ですか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('おすすめは何ですか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">お会計をお願いします</div>
+                            <div class="chinese">請結帳</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('お会計をお願いします')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('お会計をお願いします')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">辛くないものはありますか？</div>
+                            <div class="chinese">有不辣的嗎？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('辛くないものはありますか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('辛くないものはありますか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phrase-category">
+                    <h3>🛒 購物消費</h3>
+                    <div class="phrase-list">
+                        <div class="phrase-item">
+                            <div class="japanese">これはいくらですか？</div>
+                            <div class="chinese">這個多少錢？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('これはいくらですか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('これはいくらですか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">免税はできますか？</div>
+                            <div class="chinese">可以免稅嗎？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('免税はできますか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('免税はできますか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">クレジットカードは使えますか？</div>
+                            <div class="chinese">可以刷卡嗎？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('クレジットカードは使えますか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('クレジットカードは使えますか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phrase-category">
+                    <h3>🏨 住宿相關</h3>
+                    <div class="phrase-list">
+                        <div class="phrase-item">
+                            <div class="japanese">チェックインお願いします</div>
+                            <div class="chinese">我要辦理入住</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('チェックインお願いします')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('チェックインお願いします')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">Wi-Fiのパスワードを教えてください</div>
+                            <div class="chinese">請告訴我Wi-Fi密碼</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('Wi-Fiのパスワードを教えてください')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('Wi-Fiのパスワードを教えてください')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">荷物を預かってもらえますか？</div>
+                            <div class="chinese">可以幫我保管行李嗎？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('荷物を預かってもらえますか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('荷物を預かってもらえますか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phrase-category">
+                    <h3>🆘 緊急求助</h3>
+                    <div class="phrase-list">
+                        <div class="phrase-item">
+                            <div class="japanese">助けてください</div>
+                            <div class="chinese">請幫助我</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('助けてください')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('助けてください')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">警察を呼んでください</div>
+                            <div class="chinese">請叫警察</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('警察を呼んでください')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('警察を呼んでください')">🔊 語音播放</button>
+                            </div>
+                        </div>
+
+                        <div class="phrase-item">
+                            <div class="japanese">病院はどこですか？</div>
+                            <div class="chinese">醫院在哪裡？</div>
+                            <div class="phrase-buttons">
+                                <button class="button" onclick="copyToClipboard('病院はどこですか？')">📋 複製日文</button>
+                                <button class="button success" onclick="speakJapanese('病院はどこですか？')">🔊 語音播放</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 緊急聯絡電話 -->
+        <div class="section">
+            <div class="section-header">
+                <span>🚨</span>
+                <span>緊急聯絡電話</span>
+            </div>
+            <div class="section-content">
+                <div class="emergency-grid">
+                    <div class="emergency-card">
+                        <h3>🚔 警察</h3>
+                        <div class="phone">110</div>
+                        <p>遇到犯罪、事故時撥打</p>
+                        <a href="tel:110" class="button" style="background: rgba(255,255,255,0.2); margin-top: 10px;">📞 立即撥打</a>
+                    </div>
+
+                    <div class="emergency-card">
+                        <h3>🚑 救護車/消防</h3>
+                        <div class="phone">119</div>
+                        <p>醫療急救、火災時撥打</p>
+                        <a href="tel:119" class="button" style="background: rgba(255,255,255,0.2); margin-top: 10px;">📞 立即撥打</a>
+                    </div>
+
+                    <div class="emergency-card">
+                        <h3>🏥 醫療諮詢</h3>
+                        <div class="phone">#7119</div>
+                        <p>24小時醫療諮詢熱線</p>
+                        <a href="tel:#7119" class="button" style="background: rgba(255,255,255,0.2); margin-top: 10px;">📞 立即撥打</a>
+                    </div>
+
+                    <div class="emergency-card">
+                        <h3>🌍 外國人諮詢</h3>
+                        <div class="phone">050-3816-2787</div>
+                        <p>JNTO旅客熱線 (24小時)</p>
+                        <a href="tel:050-3816-2787" class="button" style="background: rgba(255,255,255,0.2); margin-top: 10px;">📞 立即撥打</a>
+                    </div>
+                </div>
+
+                <div style="background: #fff3cd; border: 2px solid #ffeaa7; border-radius: 10px; padding: 20px; margin-top: 30px;">
+                    <h3 style="color: #856404; margin-bottom: 15px;">⚠️ 重要提醒</h3>
+                    <ul style="color: #856404; line-height: 1.8;">
+                        <li>撥打緊急電話時請保持冷靜</li>
+                        <li>盡量用簡單的英文或日文說明情況</li>
+                        <li>準備好您的位置資訊（地址或附近地標）</li>
+                        <li>隨身攜帶護照和緊急聯絡人資訊</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知訊息 -->
+    <div id="notification" class="notification">
+        文字已複製到剪貼簿！
+    </div>
+
+    <script>
+        // 複製文字到剪貼簿
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showNotification('文字已複製到剪貼簿！');
+                }).catch(err => {
+                    console.error('複製失敗:', err);
+                    fallbackCopyTextToClipboard(text);
+                });
+            } else {
+                fallbackCopyTextToClipboard(text);
+            }
+        }
+
+        // 備用複製方法
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showNotification('文字已複製到剪貼簿！');
+                } else {
+                    showNotification('複製失敗，請手動複製');
+                }
+            } catch (err) {
+                console.error('Fallback: 複製失敗', err);
+                showNotification('複製失敗，請手動複製');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // 語音播放日文
+        function speakJapanese(text) {
+            if ('speechSynthesis' in window) {
+                // 停止正在播放的語音
+                speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                utterance.rate = 0.8;
+                utterance.pitch = 1;
+                
+                // 設定語音播放完成後的回調
+                utterance.onend = function() {
+                    console.log('語音播放完成');
+                };
+                
+                utterance.onerror = function(event) {
+                    console.error('語音播放錯誤:', event.error);
+                    showNotification('語音播放失敗，請檢查設備設定');
+                };
+                
+                speechSynthesis.speak(utterance);
+                showNotification('正在播放日文語音...');
+            } else {
+                showNotification('您的瀏覽器不支援語音播放功能');
+            }
+        }
+
+        // 顯示通知訊息
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // 頁面載入完成後的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('日本旅遊助手已載入完成！');
+            
+            // 檢查是否支援語音合成
+            if (!('speechSynthesis' in window)) {
+                console.warn('此瀏覽器不支援語音合成功能');
+            }
+            
+            // 檢查是否支援剪貼簿API
+            if (!navigator.clipboard) {
+                console.warn('此瀏覽器不支援現代剪貼簿API，將使用備用方法');
+            }
+        });
+
+        // 平滑滾動到指定區塊
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // 處理Uber連結點擊
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('uber-button') || e.target.closest('.uber-button')) {
+                const link = e.target.href || e.target.closest('.uber-button').href;
+                if (link.startsWith('uber://')) {
+                    // 如果是Uber深度連結，顯示提示訊息
+                    showNotification('正在開啟Uber應用程式...');
+                    
+                    // 設定超時，如果Uber app沒有安裝，3秒後顯示提示
+                    setTimeout(() => {
+                        showNotification('如果Uber沒有開啟，請先安裝Uber應用程式');
+                    }, 3000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
