@@ -66,7 +66,6 @@
 <body>
   <h1>🚗 租車情境翻譯（羽田 TOYOTA）</h1>
 
-  <!-- 對話卡片區塊（可依需求新增） -->
   <div class="card">
     <div class="zh">您好，我有預約TOYOTA的租車</div>
     <div class="jp">トヨタレンタカーを予約しています</div>
@@ -74,7 +73,107 @@
     <button onclick="speakJP('トヨタレンタカーを予約しています')">🔈 播放日文</button>
   </div>
 
-  <!-- 更多對話請插入這裡 -->
+  <div class="card">
+    <div class="zh">可以幫我聯絡接駁車嗎？</div>
+    <div class="jp">シャトルバスに連絡してもらえますか？</div>
+    <div class="romaji">Shatoru basu ni renraku shite moraemasu ka?</div>
+    <button onclick="speakJP('シャトルバスに連絡してもらえますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">請問接駁車在哪裡搭乘？</div>
+    <div class="jp">シャトルバスはどこで乗れますか？</div>
+    <div class="romaji">Shatoru basu wa doko de noremasu ka?</div>
+    <button onclick="speakJP('シャトルバスはどこで乗れますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">我不會講日文，希望可以用中文或是簡單的英文與我溝通。</div>
+    <div class="jp">日本語が話せません。中国語か簡単な英語でお願いできますか？</div>
+    <div class="romaji">Nihongo ga hanasemasen. Chūgokugo ka kantan na eigo de onegai dekimasu ka?</div>
+    <button onclick="speakJP('日本語が話せません。中国語か簡単な英語でお願いできますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">不好意思我聽不懂你說的話，我接下來會用AI翻譯協助我和你溝通可以嗎？</div>
+    <div class="jp">すみません、よく分かりません。これからAI翻訳を使って話してもいいですか？</div>
+    <div class="romaji">Sumimasen, yoku wakarimasen. Kore kara AI honyaku o tsukatte hanashite mo ii desu ka?</div>
+    <button onclick="speakJP('すみません、よく分かりません。これからAI翻訳を使って話してもいいですか？')">🔈 播放日文</button>
+  </div>
+
+  <h2>📝 表單與車輛檢查相關對話</h2>
+
+  <div class="card">
+    <div class="zh">請問有中文版本的嗎？</div>
+    <div class="jp">中国語のバージョンはありますか？</div>
+    <div class="romaji">Chūgokugo no bājon wa arimasu ka?</div>
+    <button onclick="speakJP('中国語のバージョンはありますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">請問這裡該怎麼填寫呢？</div>
+    <div class="jp">ここはどうやって記入すればいいですか？</div>
+    <div class="romaji">Koko wa dō yatte kinyū sureba ii desu ka?</div>
+    <button onclick="speakJP('ここはどうやって記入すればいいですか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">請問導航有中文嗎？</div>
+    <div class="jp">ナビは中国語に対応していますか？</div>
+    <div class="romaji">Nabi wa chūgokugo ni taiō shiteimasu ka?</div>
+    <button onclick="speakJP('ナビは中国語に対応していますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">請問有河口湖景點的 mapcode 資訊嗎？</div>
+    <div class="jp">河口湖の観光地のマップコード情報はありますか？</div>
+    <div class="romaji">Kawaguchiko no kankōchi no mappukōdo jōhō wa arimasu ka?</div>
+    <button onclick="speakJP('河口湖の観光地のマップコード情報はありますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">車子這裡好像有點問題，這樣沒問題嗎？</div>
+    <div class="jp">この部分に問題があるようですが、大丈夫ですか？</div>
+    <div class="romaji">Kono bubun ni mondai ga aru yō desu ga, daijōbu desu ka?</div>
+    <button onclick="speakJP('この部分に問題があるようですが、大丈夫ですか？')">🔈 播放日文</button>
+  </div>
+
+  <h2>💬 常用短句</h2>
+
+  <div class="card">
+    <div class="zh">請稍等一下。</div>
+    <div class="jp">少々お待ちください。</div>
+    <div class="romaji">Shōshō omachi kudasai.</div>
+    <button onclick="speakJP('少々お待ちください。')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">可以再說一次嗎？</div>
+    <div class="jp">もう一度言ってもらえますか？</div>
+    <div class="romaji">Mō ichido itte moraemasu ka?</div>
+    <button onclick="speakJP('もう一度言ってもらえますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">可以說得慢一點嗎？</div>
+    <div class="jp">もう少しゆっくり話してもらえますか？</div>
+    <div class="romaji">Mō sukoshi yukkuri hanashite moraemasu ka?</div>
+    <button onclick="speakJP('もう少しゆっくり話してもらえますか？')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">真的非常謝謝您。</div>
+    <div class="jp">本当にありがとうございます。</div>
+    <div class="romaji">Hontō ni arigatō gozaimasu.</div>
+    <button onclick="speakJP('本当にありがとうございます。')">🔈 播放日文</button>
+  </div>
+
+  <div class="card">
+    <div class="zh">不好意思，請問有會說中文的人嗎？</div>
+    <div class="jp">すみません、中国語が話せる方はいらっしゃいますか？</div>
+    <div class="romaji">Sumimasen, chūgokugo ga hanaseru kata wa irasshaimasu ka?</div>
+    <button onclick="speakJP('すみません、中国語が話せる方はいらっしゃいますか？')">🔈 播放日文</button>
+  </div>
 
   <script>
     function speakJP(text) {
