@@ -2,20 +2,71 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>租車情境翻譯 - 羽田機場 TOYOTA</title>
   <style>
-    body { font-family: sans-serif; padding: 2em; line-height: 1.6; background: #f9f9f9; }
-    .card { background: white; border-radius: 12px; padding: 1em; margin-bottom: 1em; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .zh { font-size: 1.2em; font-weight: bold; }
-    .jp { font-size: 1.2em; color: #2c3e50; }
-    .romaji { font-size: 0.95em; color: #7f8c8d; margin-bottom: 0.5em; }
-    button { padding: 0.3em 0.8em; font-size: 0.9em; border: none; border-radius: 6px; background: #3498db; color: white; cursor: pointer; }
-    button:hover { background: #2980b9; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 1em;
+      background: #f4f4f4;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+      font-size: 1.5em;
+      margin-top: 1.5em;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1em;
+      margin: 1em 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .zh {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .jp {
+      font-size: 1.1em;
+      color: #2c3e50;
+      margin-top: 0.2em;
+    }
+    .romaji {
+      font-size: 0.95em;
+      color: #7f8c8d;
+      margin: 0.2em 0 0.5em;
+    }
+    button {
+      padding: 0.4em 0.8em;
+      font-size: 0.9em;
+      border: none;
+      border-radius: 6px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    @media (max-width: 600px) {
+      h1, h2 {
+        font-size: 1.2em;
+      }
+      .zh, .jp {
+        font-size: 1em;
+      }
+      .romaji {
+        font-size: 0.9em;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>🚗 租車情境翻譯（羽田 TOYOTA）</h1>
 
+  <!-- 對話卡片區塊（可依需求新增） -->
   <div class="card">
     <div class="zh">您好，我有預約TOYOTA的租車</div>
     <div class="jp">トヨタレンタカーを予約しています</div>
@@ -23,33 +74,7 @@
     <button onclick="speakJP('トヨタレンタカーを予約しています')">🔈 播放日文</button>
   </div>
 
-  <div class="card">
-    <div class="zh">可以幫我聯絡接駁車嗎？</div>
-    <div class="jp">シャトルバスに連絡してもらえますか？</div>
-    <div class="romaji">Shatoru basu ni renraku shite moraemasu ka?</div>
-    <button onclick="speakJP('シャトルバスに連絡してもらえますか？')">🔈 播放日文</button>
-  </div>
-
-  <div class="card">
-    <div class="zh">請問接駁車在哪裡搭乘？</div>
-    <div class="jp">シャトルバスはどこで乗れますか？</div>
-    <div class="romaji">Shatoru basu wa doko de noremasu ka?</div>
-    <button onclick="speakJP('シャトルバスはどこで乗れますか？')">🔈 播放日文</button>
-  </div>
-
-  <div class="card">
-    <div class="zh">我不會講日文，希望可以用中文或是簡單的英文與我溝通。</div>
-    <div class="jp">日本語が話せません。中国語か簡単な英語でお願いできますか？</div>
-    <div class="romaji">Nihongo ga hanasemasen. Chūgokugo ka kantan na eigo de onegai dekimasu ka?</div>
-    <button onclick="speakJP('日本語が話せません。中国語か簡単な英語でお願いできますか？')">🔈 播放日文</button>
-  </div>
-
-  <div class="card">
-    <div class="zh">不好意思我聽不懂你說的話，我接下來會用AI翻譯協助我和你溝通可以嗎？</div>
-    <div class="jp">すみません、よく分かりません。これからAI翻訳を使って話してもいいですか？</div>
-    <div class="romaji">Sumimasen, yoku wakarimasen. Kore kara AI honyaku o tsukatte hanashite mo ii desu ka?</div>
-    <button onclick="speakJP('すみません、よく分かりません。これからAI翻訳を使って話してもいいですか？')">🔈 播放日文</button>
-  </div>
+  <!-- 更多對話請插入這裡 -->
 
   <script>
     function speakJP(text) {
