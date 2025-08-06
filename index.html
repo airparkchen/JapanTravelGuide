@@ -175,12 +175,31 @@
     <button onclick="speakJP('すみません、中国語が話せる方はいらっしゃいますか？')">🔈 播放日文</button>
   </div>
 
-  <script>
-    function speakJP(text) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ja-JP';
-      speechSynthesis.speak(utterance);
+<script>
+  let voices = [];
+
+  function loadVoices() {
+    voices = speechSynthesis.getVoices();
+  }
+
+  // 某些瀏覽器需要這樣觸發一次
+  speechSynthesis.onvoiceschanged = loadVoices;
+
+  function speakJP(text) {
+    if (!voices.length) loadVoices();
+
+    // 找到日文語音
+    const jpVoice = voices.find(v => v.lang.startsWith('ja'));
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    if (jpVoice) {
+      utterance.voice = jpVoice;
+    } else {
+      utterance.lang = 'ja-JP'; // 備用
     }
-  </script>
+    speechSynthesis.speak(utterance);
+  }
+</script>
+
 </body>
 </html>
